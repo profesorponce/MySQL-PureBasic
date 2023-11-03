@@ -1,10 +1,9 @@
-﻿
-﻿;-----------------------------------------------------------------------
+﻿; -----------------------------------------------------------------------
 ; SISTEMA - Ingreso de clientes en una tabla en una base de datos MySQL
 ;           en PureBasic
 ; (c) 2023 por Ricardo Ponce
 ; https://profesorponce.blogspot.com/
-;-----------------------------------------------------------------------
+; -----------------------------------------------------------------------
 
 ; Base de datos
 ; -------------------------------------------------------
@@ -27,7 +26,10 @@
 ; tabla (clientes) de la base de datos JavaBDD.
 ;
 ; Para el ejemplo de este programa, la table CLIENTES ya debe estar creada. Pero puede 
-; usar el programa 2 (2.Insertar una tabla.pb) para crearla
+; usar el programa 2 (2.Insertar una tabla.pb) para crearla o puede usar este comando
+; para ingresarlo directamente desde PHPMYADMIN usando la aleta SQL:
+;
+; create table clientes (id INT AUTO_INCREMENT, PRIMARY KEY(id), nombre VARCHAR(50), apellido VARCHAR(30), telefono VARCHAR(20))
 ;
 ; Al iniciar el programa, usted podra ingresar los datos a un form visual. Al presionar
 ; el botón GRABAR, el programa lee los datos ingresadoa a un formulario y llama a un 
@@ -41,6 +43,7 @@
 ; controles de la interface visual. En las enumeraciones PureBasic
 ; genera los numeros automticamente sin ser necesario que el 
 ; programador los defina
+
 Enumeration FormMenu
   #Ventana_Principal  ; ID del form o ventana principal
   #BOTON_GRABAR       ; ID del boton grabar
@@ -63,6 +66,7 @@ Global EstaDuplicado.l = 0 ; Variable EstaDuplicado del tipo long (.l)
 ; ----------------------------------------------------------------
 ; Procedimiento GrabarFicha en la tabla CLIENTES de la BDD JavaBDD
 ; ----------------------------------------------------------------
+
 Procedure.l GrabarFicha (nombre$,apellido$,telefono$)
   
   ; este procedimiento procede a grabar los datos de la ficha del cliente
@@ -130,7 +134,7 @@ Procedure.l VerificarSiEstaGrabado(apellido$)
 
         EstaDuplicado = 0 ;inicialización con el estado= no esta duplicado
        
-        DB_Columna = 1 ;se programa para ver la columna 'nombre'
+        DB_Columna = 2 ;se programa para ver la columna 'apellido'
        
         While NextDatabaseRow(#DB_Id)                  
           If apellido$=GetDatabaseString(#DB_Id, DB_Columna) ;verifica si el apellido esta grabado
@@ -217,9 +221,3 @@ EndProcedure
  
  End
 
-
-; IDE Options = PureBasic 5.70 LTS (Windows - x86)
-; CursorPosition = 219
-; FirstLine = 192
-; Folding = -
-; EnableXP
